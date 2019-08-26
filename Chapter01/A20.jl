@@ -1,4 +1,6 @@
-#Solução para A20
+# Solução para A20
+# Forma analítica do programa anterior
+# Compara os dois outputs
 function numerical_sol(AO, BO, time, dt=0.1, k1=0.1)
     nsteps = Int64(time/dt)
     T = collect(range(0, length=nsteps, step=Float64(dt)))
@@ -13,7 +15,7 @@ function numerical_sol(AO, BO, time, dt=0.1, k1=0.1)
             B[ts+1] = 0.
         end
     end
-    @time T, A, B
+    return A
 end
 
 function analitical_sol(AO, BO, time, dt=0.1, k1=0.1)
@@ -25,9 +27,9 @@ function analitical_sol(AO, BO, time, dt=0.1, k1=0.1)
         A[ts] = AO * exp(-k1*T[ts])
         B[ts] = BO * exp(+k1*T[ts])
     end
-    @time T, A, B
+    return A
 end
 
 
-numerical_sol(100,0,100)
-analitical_sol(100,0,100)
+delta = Vector{Float64}(undef,1000)
+delta = analitical_sol(100,0,100) - numerical_sol(100,0,100)

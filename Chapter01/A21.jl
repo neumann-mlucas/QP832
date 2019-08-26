@@ -1,4 +1,9 @@
-# Solução para A23, A24, A25
+# Solução para A21, A22, A23, A24, A25
+# 21) reaction_kinetics discretiza a equação
+# 22) pode ser plotado com os valores de retorno da reaction_kinetics
+# 23) discretização de B está implementada em reaction_kinetics
+# 24) error para o balanço de massas e da forma exata da equação são calculados pela função
+# 25) clausula "if ..." indica o erro quando esse é maior que 1.0e-4
 function exact_sol(AO, BO, ts, dt=0.1, k1=0.1, k2=0.02)
     time = ts * dt
     A = AO * ((k2 + k1 * exp(-(k1+k2) * time))/(k1+k2))

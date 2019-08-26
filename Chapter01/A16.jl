@@ -1,4 +1,8 @@
 # Solução para A16, A17, A18, A19
+# 16) dt como um parâmetro da função
+# 17) CA, k1, time e dt podem ser variados
+# 18) concentrações negativas são evitadas com uma clásula "if ..."
+# 19) BO como um parâmetro e a função retorna b(t)
 function reaction_kinetics(AO, BO, time, dt=0.1, k1=0.1)
     nsteps = Int64(time/dt)
     T = collect(range(0, length=nsteps, step=Float64(dt)))
