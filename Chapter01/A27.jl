@@ -1,13 +1,13 @@
-#= using Plots =#
+# Solução para A27
 
-function zero_order_step(Float64 :: CFC, Float64 :: CL; t=0.01, k=0.01)
-    return (CFC > 0.0 ? (CFC - k * t, CL + k * t) : (0.0, CL))
-    #= if CFC > 0.0 =#
-    #=     return CFC - k * dt, CL + k * t =#
-    #= else =#
-    #=     return 0.0,  CL =#
-    #= end =#
-    #= return a, b =#
+using Plots
+
+function zero_order_step(CFC, CL; dt=0.01, k=0.001)
+    if CFC > 0.0
+        return CFC - k * dt, CL + k * dt
+    else
+        return 0.0,  CL
+    end
 end
 
 function radicalar_step(CL, CLO, O3; dt=0.01, k1=0.1, k2=0.01)
@@ -17,16 +17,18 @@ function radicalar_step(CL, CLO, O3; dt=0.01, k1=0.1, k2=0.01)
     return CL + dCL, CLO + dCLO, O3 + dO3
 end
 
-#= gr() =#
-o3 = Float64(0.1)
-cfc = Float64(0.001)
-cl = Float64(0.0)
-clo = Float64(0.0)
-for nsteps in 1:1000
+ntotal = 50000
+vec = Vector{Float64}(undef,ntotal)
+
+cl, clo = 0.0, 0.0
+o3, cfc = 10.0, 0.05
+
+for nsteps in 1:ntotal
+    global o3, cfc, cl, clo
     cfc, cl = zero_order_step(cfc,cl)
     cl, clo, o3 = radicalar_step(cl, clo, o3)
-    #= scatter!(nsteps, O3, label="O_3", color="red") =#
-    #= scatter!(nsteps, CL, label="Cl", color="green") =#
-    #= scatter!(nsteps, CLO, label="ClO", color="blue") =#
-    #= scatter!(nsteps, CFC, label="CFC", color="pink") =#
+    # stores o3 concentration
+    vec[nsteps] = o3
 end
+
+#= plot([1:ntotal],vec) =#
