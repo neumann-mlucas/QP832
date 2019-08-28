@@ -71,6 +71,7 @@
     Plug 'ambv/black', { 'on': 'Black' }
     Plug 'dense-analysis/ale'
     Plug 'itchyny/lightline.vim'
+    Plug 'JuliaEditorSupport/julia-vim'
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     Plug 'luochen1990/rainbow'
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -131,7 +132,9 @@
     set title
     set undolevels=100
     set virtualedit=block
-    " set backspace=indent,eol,start
+    set backspace=indent,eol,start
+    " source https://github.com/words/moby
+    set thesaurus+=home/neumann/.vim/word.txt
 
 " No Swap file
     set noswapfile
@@ -151,6 +154,8 @@
     set softtabstop=4
     set tabstop=4
 
+    let python_highlight_all=1
+
 " Provides tab-completion for all file-related tasks
     set path+=**
     set wildmenu
@@ -169,7 +174,7 @@
 
     nnoremap <C-d> <C-d>zz
     nnoremap <C-u> <C-u>zz
-    " Intel model M workaround
+" Intel model M workaround
     nnoremap <A--> <C-d>zz
     nnoremap <A-=> <C-u>zz
 
@@ -193,10 +198,11 @@
     nnoremap <Leader>s :call ToggleSpell_EN()<CR>
     nnoremap <Leader>S :call ToggleSpell_PT()<CR>
     nnoremap <Leader>n :call ToggleNumber()<CR>
-
-" Change keyboard layout
-    nnoremap <F3> :!kb_us<CR>
-    nnoremap <F4> :!kb_br<CR>
+" Git
+    nnoremap <Leader>gs :!git status<CR>
+    nnoremap <Leader>gd :!git diff %<CR>
+    nnoremap <Leader>ga :!git add %<CR>
+    nnoremap <Leader>gc :!git commit -m "This commit was automatically created with Vim" %<CR>
 
 " Navigation in buffers
     nnoremap <Tab> :bn<CR>
@@ -221,11 +227,13 @@
     vnoremap    v   <C-V>
     vnoremap <C-V>     v
 
-" Completion
+" Completion ( file, keyword, dictionary, thesaurus )
     inoremap <C-f> <C-x><C-f>
     inoremap <C-p> <C-x><C-p>
     inoremap <C-n> <C-x>s
-    inoremap <C-r> <C-r>"
+    inoremap <C-t> <C-x><C-t>
+    " Past from + register in insert mode
+    inoremap <C-r> <C-r>+
 
 " Keep selection after indenting
     xnoremap <silent> < <gv
@@ -352,17 +360,27 @@
 
 " PLUGINS {{{
 
-    " let g:deoplete#enable_at_startup = 1
-    set statusline+=%{FugitiveStatusline()}
-
 " Ale
-    " let g:ale_fix_on_save=1
-    let g:ale_lint_on_enter=0
+    let g:ale_set_highlights = 0
+    " Lint file just on save
     let g:ale_lint_on_text_changed='never'
-    let python_highlight_all=1
+    let g:ale_lint_on_insert_leave=0
+    let g:ale_lint_on_enter=0
+    let g:ale_lint_on_save=1
 
-    " set statusline+=%#warningmsg#
-    " set statusline+=%*
+    let g:ale_echo_msg_error_str = 'E'
+    let g:ale_echo_msg_warning_str = 'W'
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+    let g:ale_set_loclist = 0
+    let g:ale_set_quickfix = 1
+
+    " Testing
+    let g:ale_completion_enabled = 1
+    set omnifunc=ale#completion#OmniFunc
+    inoremap <C-o> <C-x><C-o>
+    nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
+    nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Black
     let g:black_skip_string_normalization=1
