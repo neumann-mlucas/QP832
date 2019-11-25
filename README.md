@@ -2,6 +2,10 @@
 
  *Segundo Semestre de 2019*, UNICAMP
 
+<p align="center">
+  <img src="julia.png"/>
+</p>
+
 ![julia](julia.png)
 
 ### Repositório contendo a solução para os exercícios propostos na matéria QP832.
