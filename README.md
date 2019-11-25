@@ -6,8 +6,6 @@
   <img src="julia.png"/>
 </p>
 
-![julia](julia.png)
-
 ### Repositório contendo a solução para os exercícios propostos na matéria QP832.
 * Como as atividades iniciais pedem apenas para verificar algo no terminal interativo do Julia, comecei os exercícios pela atividade 16.
 * Alguns exercícios foram agrupados em um arquivo, pois tratavam-se da modificação de um mesmo código base. Acho que isso diminuiu um pouco a redundância de ter vários arquivos com, basicamente, o mesmo código.
